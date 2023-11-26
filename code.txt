@@ -1,0 +1,67 @@
+import tkinter as tk
+from math import sqrt
+
+list_pr = [...]
+
+def mn_finder(x):
+    delitels = []
+    delim = [x]
+    y = 2
+    while y <= sqrt(x):
+        if x % y == 0:
+            delitels.append(y)
+            x //= y
+            delim.append(x)
+        else:
+            y += 1
+    if x > 1:
+        delitels.append(x)
+    return delitels, delim
+
+def table(delitels, delim):
+    len_spaces = int(len(str(delim[0])))
+    otvet = ""
+    for x in range(len(delim)):
+        otvet += f"{' ' * (len_spaces - len(str(delim[x])))}{delim[x]} | {delitels[x]} \n"
+    otvet += f"{' ' * (len_spaces - 1)}1 | "
+    return otvet
+
+def main_func():
+    x = int(entry.get())
+    y = 0
+    delitel = []
+    delimoe = [x]
+    res = mn_finder(x)
+    delitel = res[0]
+    delimoe = res[1]
+    otvet = table(delitel, delimoe)
+    output_text.delete(1.0, tk.END)
+    output_text.insert(tk.END, otvet)
+
+def main():
+    global entry, output_text
+    root = tk.Tk()
+    root.title("Разложение числа на множители")
+
+    label = tk.Label(root, text="Введите число:")
+    label.pack()
+
+    var1 = tk.StringVar()
+
+    entry = tk.Entry(root, textvariable=var1)
+    entry.pack()
+
+    # Create a green button
+    create_button = tk.Button(root, text="Разложить на множители", command=main_func, bg='lightgreen', fg='black', relief=tk.RAISED)
+    create_button.pack()
+
+    output_frame = tk.Frame(root)
+    output_frame.pack()
+
+    output_text = tk.Text(output_frame, height=25, width=50)
+    output_text.pack()
+
+    root.mainloop()
+
+if __name__ == "__main__":
+    main()
